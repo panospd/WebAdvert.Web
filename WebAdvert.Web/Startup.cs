@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,6 +32,22 @@ namespace WebAdvert.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddCognitoIdentity(config =>
+            {
+                config.Password = new PasswordOptions
+                {
+                    RequireDigit = false,
+                    RequiredLength = 6,
+                    RequireUppercase = false,
+                    RequireLowercase = false,
+                    RequireNonAlphanumeric = false
+                };
+            });
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = new PathString("/Accounts/login");
+            });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -47,10 +64,11 @@ namespace WebAdvert.Web
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-
+            
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
