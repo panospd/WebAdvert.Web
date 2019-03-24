@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using WebAdvert.Web.Services;
 
 namespace WebAdvert.Web
 {
@@ -49,6 +50,7 @@ namespace WebAdvert.Web
                 options.LoginPath = new PathString("/Accounts/login");
             });
 
+            services.AddTransient<IFileUploader, S3FileUploader>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

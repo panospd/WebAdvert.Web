@@ -22,8 +22,7 @@ namespace WebAdvert.Web.Controllers
         [HttpGet]
         public IActionResult SignUp()
         {
-            var model = new SignUpModel();
-            return View(model);
+            return View();
         }
 
         [HttpPost]
@@ -31,8 +30,8 @@ namespace WebAdvert.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = _pool.GetUser(model.Email);
-                if (user != null)
+                var user = await _pool.FindByIdAsync(model.Email);
+                if (user.Status != null)
                 {
                     ModelState.AddModelError("UserExists", "User with this email already exists.");
                     return View(model);
@@ -42,7 +41,7 @@ namespace WebAdvert.Web.Controllers
             var createdUser = await _userManager.CreateAsync(user, model.Password);
 
                if (createdUser.Succeeded)
-                   RedirectToAction("Confirm");
+                  return RedirectToAction("Confirm");
             }
 
             return View();
@@ -83,9 +82,9 @@ namespace WebAdvert.Web.Controllers
             return View("Confirm",model);
         }
         [HttpGet]
-        public IActionResult Login(LoginModel model)
+        public IActionResult Login()
         {
-            return View(model);
+            return View();
         }
 
         [HttpPost]
