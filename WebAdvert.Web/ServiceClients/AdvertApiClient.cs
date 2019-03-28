@@ -34,7 +34,16 @@ namespace WebAdvert.Web.ServiceClients
             var advertApiModel = _mapper.Map<AdvertModel>(model);
 
             var jsonModel = JsonConvert.SerializeObject(advertApiModel);
-            var response = await _client.PostAsync(_client.BaseAddress, new StringContent(jsonModel));
+            var address = $"{_client.BaseAddress}/create";
+            
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, address);
+            request.Content = new StringContent(jsonModel);
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            
+
+            var response = await _client.SendAsync(request);
 
             var responseJson = await response.Content.ReadAsStringAsync();
             var createAdvertResponse = JsonConvert.DeserializeObject<CreateAdvertResponse>(responseJson);
@@ -47,8 +56,12 @@ namespace WebAdvert.Web.ServiceClients
             var advertModel = _mapper.Map<ConfirmAdvertModel>(model);
             var jsonModel = JsonConvert.SerializeObject(advertModel);
 
-            var response =
-                await _client.PutAsync(new Uri($"{_client.BaseAddress}/confirm"), new StringContent(jsonModel));
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Put, $"{_client.BaseAddress}/confirm");
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            request.Content = new StringContent(jsonModel);
+            request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            var response = await _client.SendAsync(request);
 
             return response.StatusCode == HttpStatusCode.OK;
         }
