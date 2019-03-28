@@ -24,11 +24,12 @@ namespace WebAdvert.Web.Controllers
             _mapper = mapper;
         }
         [HttpGet]
-        public IActionResult Create(CreateAdvertViewModel model)
+        public IActionResult Create()
         {
-            return View(model);
+            return View();
         }
 
+        [HttpPost]
         public async Task<IActionResult> Create(CreateAdvertViewModel model, IFormFile imageFile)
         {
             if (ModelState.IsValid)

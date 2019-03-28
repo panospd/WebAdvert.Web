@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using AdvertApi.Models;
 using AutoMapper;
@@ -26,7 +27,6 @@ namespace WebAdvert.Web.ServiceClients
 
             var baseUrl = _configuration.GetSection("AdvertApi").GetValue<string>("BaseUrl");
             _client.BaseAddress = new Uri(baseUrl);
-            _client.DefaultRequestHeaders.Add("Content-type", "application/json");
         }
 
         public async Task<AdvertResponse> Create(CreateAdvertModel model)
