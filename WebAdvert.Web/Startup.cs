@@ -64,7 +64,7 @@ namespace WebAdvert.Web
             services.AddHttpClient<ISearchApiClient, SearchApiClient>();
 
             services.AddAutoMapper();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         private IAsyncPolicy<HttpResponseMessage> GetCircuitBreakerPatternPolicy()

@@ -24,7 +24,7 @@ namespace WebAdvert.Web.ServiceClients
             var result = new List<AdvertType>();
 
             var callUrl = $"{_baseAddress}/search/v1/{keyword}";
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, new Uri(callUrl));
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, callUrl);
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             try
