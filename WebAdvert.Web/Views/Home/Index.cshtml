@@ -1,10 +1,27 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@model IEnumerable<WebAdvert.Web.Models.Home.IndexViewModel>
 
-<div class="row bg-info" style="padding: 150px; margin-top: 100px;">
-    <div class="text-center">
-        <h1>Welcome to Web Advertisements</h1>
+<div class="row" style="margin-top: 50px; margin-bottom: 50px; padding: 10px 0 10px 0; border: 2px solid blue;" id="Search">
+    <div class="col-md-2 col-sm-4 text-left">
+        <span>Enter a keyword:</span>
+    </div>
+    <div class="col-md-10 col-sm-8 text-left">
+        <form method="post" asp-controller="Home" asp-action="Search">
+            <div class="col-md-10 col-sm-8">
+                <input type="text"
+                       name="keyword"
+                       id="keyword"
+                       class="form-control float-left"
+                       required
+                       placeholder="Keyword"
+                       style="width: 80%; margin-right: 5px"/>
+            </div>
+            
+            <div class="col-md-2 col-sm-4">
+                <button type="submit" class="btn btn-info" placeholder="Keyword" required>Search</button>
+            </div>
+        </form>
     </div>
 </div>
-

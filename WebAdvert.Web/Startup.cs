@@ -61,6 +61,8 @@ namespace WebAdvert.Web
                 .AddPolicyHandler(GetRetryPolicy())
                 .AddPolicyHandler(GetCircuitBreakerPatternPolicy());
 
+            services.AddHttpClient<ISearchApiClient, SearchApiClient>();
+
             services.AddAutoMapper();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
