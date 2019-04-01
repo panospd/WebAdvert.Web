@@ -3,7 +3,7 @@
 }
 @model IEnumerable<WebAdvert.Web.Models.Home.IndexViewModel>
 
-<div class="row" style="margin-top: 50px; margin-bottom: 50px; padding: 10px 0 10px 0; border: 2px solid blue;" id="Search">
+<div class="row" style="margin-top: 50px; margin-bottom: 50px; padding: 10px 0 10px 0;" id="Search">
     <div class="col-md-2 col-sm-4 text-left">
         <span>Enter a keyword:</span>
     </div>
@@ -24,4 +24,17 @@
             </div>
         </form>
     </div>
+    
+    <div class="row" style="padding: 0; margin: 0;">
+            @foreach (var viewModel in @Model)
+            {
+                <div class="col-md-3" style="margin-top: 50px; margin-bottom: 50px; padding: 10px 0 10px 0;">
+                    <div style="padding: 10px; margin: 10px; border: 2px solid grey;">
+                        @{ await Html.RenderPartialAsync("_AdvertCard", viewModel); }
+                    </div>
+                    
+                </div>
+            }
+    </div>
 </div>
+

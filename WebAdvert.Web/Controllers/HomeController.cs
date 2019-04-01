@@ -16,24 +16,29 @@ namespace WebAdvert.Web.Controllers
     {
         private readonly ISearchApiClient _searchApiClient;
         private readonly IMapper _mapper;
+        private readonly IAdvertApiClient _advertApiClient;
 
-        public HomeController(ISearchApiClient searchApiClient, IMapper mapper)
+        public HomeController(ISearchApiClient searchApiClient, IMapper mapper, IAdvertApiClient advertApiClient)
         {
             _searchApiClient = searchApiClient;
             _mapper = mapper;
+            _advertApiClient = advertApiClient;
         }
 
         [Authorize]
-        public IActionResult Index()
+        [ResponseCache(Duration = 60)]
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var allAds = await _advertApiClient.GetAllAsync();
+            var allViewModels = allAds.Select(x => _mapper.Map<IndexViewModel>(x));
+
+            return View(allViewModels);
         }
 
         [HttpPost]
         public async Task<IActionResult> Search(string keyword)
         {
             var viewModel = new List<SearchViewModel>();
-
             var searchResult = await _searchApiClient.Search(keyword);
 
             searchResult.ForEach(advertDoc =>

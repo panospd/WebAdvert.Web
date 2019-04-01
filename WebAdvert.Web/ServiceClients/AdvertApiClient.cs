@@ -41,8 +41,6 @@ namespace WebAdvert.Web.ServiceClients
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-            
-
             var response = await _client.SendAsync(request);
 
             var responseJson = await response.Content.ReadAsStringAsync();
@@ -64,6 +62,29 @@ namespace WebAdvert.Web.ServiceClients
             var response = await _client.SendAsync(request);
 
             return response.StatusCode == HttpStatusCode.OK;
+        }
+
+        public async Task<List<Advertisement>> GetAllAsync()
+        {
+            string callUri = $"{_client.BaseAddress}/all";
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, callUri);
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            try
+            {
+                var apiCallResponse = await _client.SendAsync(request);
+
+                var allAdvertModels = await apiCallResponse.Content.ReadAsAsync<List<AdvertModel>>();
+
+                return allAdvertModels.Select(x => _mapper.Map<Advertisement>(x)).ToList();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+            
         }
     }
 }
