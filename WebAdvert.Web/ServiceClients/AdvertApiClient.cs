@@ -29,7 +29,7 @@ namespace WebAdvert.Web.ServiceClients
             _client.BaseAddress = new Uri(baseUrl);
         }
 
-        public async Task<AdvertResponse> Create(CreateAdvertModel model)
+        public async Task<AdvertResponse> CreateAsync(CreateAdvertModel model)
         {
             var advertApiModel = _mapper.Map<AdvertModel>(model);
 

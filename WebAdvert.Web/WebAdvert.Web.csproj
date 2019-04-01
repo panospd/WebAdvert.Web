@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AdvertApi.Models.panospd" Version="1.0.1" />
+    <PackageReference Include="AdvertApi.Models.panospd" Version="1.0.3" />
     <PackageReference Include="Amazon.AspNetCore.Identity.Cognito" Version="0.9.0.12" />
     <PackageReference Include="Amazon.Extensions.CognitoAuthentication" Version="1.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.0.0" />
