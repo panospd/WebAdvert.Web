@@ -38,7 +38,7 @@ namespace WebAdvert.Web.Controllers
 
             searchResult.ForEach(advertDoc =>
             {
-                var viewModelItem = Mapper.Map<SearchViewModel>(advertDoc);
+                var viewModelItem = _mapper.Map<SearchViewModel>(advertDoc);
                 viewModel.Add(viewModelItem);
             });
 

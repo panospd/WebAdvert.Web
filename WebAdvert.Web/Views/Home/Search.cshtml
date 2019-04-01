@@ -9,9 +9,11 @@
     <div class="col-md-10">
         @foreach (var item in Model)
         {
-            <div class="border rounded border-info w-100">
-                <img src="http://www.iconninja.com/files/180/701/315/search-results-icon.png" style="width: 24px; height: 24px;"/>
-                <a class="btn-link" href="@item.Id"> @item.Title</a>
+            <div class="row">
+                <div style="margin-top: 50px; margin-bottom: 50px; padding: 10px; border: 2px solid blue;">
+                    <img src="http://www.iconninja.com/files/180/701/315/search-results-icon.png" style="width: 24px; height: 24px;"/>
+                    <a class="btn-link" href="@item.Id"> @item.Title</a>
+                </div>
             </div>
         }
     </div>
