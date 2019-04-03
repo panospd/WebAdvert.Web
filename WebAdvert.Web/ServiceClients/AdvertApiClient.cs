@@ -6,6 +6,8 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using AdvertApi.Models;
+using Amazon.ServiceDiscovery;
+using Amazon.ServiceDiscovery.Model;
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
@@ -25,6 +27,21 @@ namespace WebAdvert.Web.ServiceClients
             _client = client;
             _mapper = mapper;
 
+            var discoveryClient = new AmazonServiceDiscoveryClient();
+
+            var discoveryTask = discoveryClient.DiscoverInstancesAsync(new DiscoverInstancesRequest
+            {
+                ServiceName = "advertapi",
+                NamespaceName = "WEbAdvertisement"
+            });
+
+            discoveryTask.Wait();
+
+            var instances = discoveryTask.Result.Instances;
+
+            var ipv4 = instances[0].Attributes["AWS_INSTANCE_IPV4"];
+            var port = instances[0].Attributes["AWS_INSTANCE_PORT"];
+            
             var baseUrl = _configuration.GetSection("AdvertApi").GetValue<string>("BaseUrl");
             _client.BaseAddress = new Uri(baseUrl);
         }
